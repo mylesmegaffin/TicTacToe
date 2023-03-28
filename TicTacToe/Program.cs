@@ -8,20 +8,22 @@ namespace TicTacToe
         static bool winner = false;
         static void Main(string[] args)
         {
+            // Continue to play/run until a Player wins
             while (!winner) 
             {
                 Player1();
                 Player2();
             }
-
         }
 
+        // Player 1 Method everything The Player would do during their turn
         public static void Player1()
         {
             ShowBoard();
             Placement(1);
             winner = CheckWinner(1);
         }
+        // Player 2 Method everything The Player would do during their turn
         public static void Player2()
         {
             ShowBoard();
@@ -29,6 +31,10 @@ namespace TicTacToe
             winner = CheckWinner(2);
         }
 
+        /// <summary>
+        /// Placing the players tic on the board. Putting the player given, into the array at the input given
+        /// </summary>
+        /// <param name="player"></param>
         public static void Placement(int player)
         {
             bool placementInProgress = true;
@@ -58,6 +64,9 @@ namespace TicTacToe
             }
         }
 
+        /// <summary>
+        /// Displays the array in the console in a rough board.
+        /// </summary>
         public static void ShowBoard()
         {
             Console.WriteLine("++++++++++++++++++");
@@ -79,6 +88,11 @@ namespace TicTacToe
             Console.WriteLine("++++++++++++++++++");
         }
 
+        /// <summary>
+        /// Checking if there is 3 line placed by one player. If so it returns True else False.
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns></returns>
         public static bool CheckWinner(int player)
         {
             // Check Across the top
