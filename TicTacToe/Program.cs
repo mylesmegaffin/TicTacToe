@@ -5,42 +5,97 @@ namespace TicTacToe
     internal class Program
     {
         static int[,] board = new int[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+        static int tacPlaced = 0;
         static bool winner = false;
+
+        // Ascii Number for X
         static int player1Marker = 88;
+
+        // Ascii Number for O
         static int player2Marker = 79;
+
         static void Main(string[] args)
         {
+            Gameloop();
+        }
+
+        /// <summary>
+        /// Resets the Game, Clears the board array, resets winner, and resets the possibility of a cats game.
+        /// </summary>
+        public static void ResetGame()
+        {
+            int counter = 0;
+
+            // Info for Users & waiting for them to play another game
+            Console.WriteLine("Press anything to play again");
+            Console.ReadKey();
+            Console.Clear();
+
+            // Resetting the game
+            winner = false;
+            tacPlaced = 0;
+            
+            // Resetting the board
+            for (int i = 0; i < board.GetLength(0); i++)
+            {
+                for (int j = 0; j < board.GetLength(1); j++)
+                {
+                    counter++;
+                    board[i,j] = counter;
+                }
+            }
+
+            //Start New Game
+            Gameloop();
+        }
+
+        public static void Gameloop()
+        {
             // Continue to play/run until a Player wins
-            while (!winner) 
+            while (!winner)
             {
-                Player1();
-                Player2();
+                // Player 1
+                ShowBoard();
+                Placement(player1Marker);
+                winner = CheckWinner(player1Marker);
+                if (winner)
+                {
+                    Console.Clear();
+                    ShowBoard();
+                    Console.WriteLine("Player 1 is the Winner!");
+                    break;
+                }
+                else if (tacPlaced == 9)
+                {
+                    Console.Clear();
+                    ShowBoard();
+                    Console.WriteLine("Cats Game");
+                    break;
+
+                }
+                Console.Clear();
+
+                // Player 2
+                ShowBoard();
+                Placement(player2Marker);
+                winner = CheckWinner(player2Marker);
+                if (winner)
+                {
+                    Console.WriteLine("Player 2 is the Winner!");
+                    break;
+                }
+                else if (tacPlaced == 9)
+                {
+                    Console.WriteLine("Cats Game");
+                    break;
+
+                }
+                Console.Clear();
+
             }
+            ResetGame();
         }
 
-        // Player 1 Method everything The Player would do during their turn
-        public static void Player1()
-        {
-            ShowBoard();
-            Placement(player1Marker);
-            winner = CheckWinner(player1Marker);
-            if (winner)
-            {
-                Console.WriteLine("Player 1 is the Winner!");
-            }
-
-        }
-        // Player 2 Method everything The Player would do during their turn
-        public static void Player2()
-        {
-            ShowBoard();
-            Placement(player2Marker);
-            winner = CheckWinner(player2Marker);
-            if (winner)
-            {
-                Console.WriteLine("Player 2 is the Winner!");
-            }
-        }
 
         /// <summary>
         /// Placing the players tic on the board. Putting the player given, into the array at the input given
@@ -51,46 +106,31 @@ namespace TicTacToe
             bool placementInProgress = true;
             while (placementInProgress)
             {
-                Console.WriteLine("Where do you want to go?: ");
+                char letterPlayer = Convert.ToChar(player);
+                Console.WriteLine($"{letterPlayer}, Pick a Spot thats Open: ");
                 string userInput = Console.ReadLine();
-                if(Int32.TryParse(userInput, out int position))
+                if (Int32.TryParse(userInput, out int position))
                 {
-                    for (int i = 0 ; i < board.GetLength(0); i++)
+                    for (int i = 0; i < board.GetLength(0); i++)
                     {
-                        for(int j = 0 ; j < board.GetLength(1); j++)
+                        for (int j = 0; j < board.GetLength(1); j++)
                         {
-                            if (board[i,j] == position && board[i,j] < 9)
+                            if (board[i, j] == position && board[i, j] <= 9)
                             {
-                                board[i,j] = player;
+                                board[i, j] = player;
                                 placementInProgress = false;
+                                tacPlaced++;
                             }
                         }
                     }
                 }
-                /*
-                Console.WriteLine("What Column: ");
-                Int32.TryParse(Console.ReadLine(), out int column);
-                Console.WriteLine("What Row: ");
-                Int32.TryParse(Console.ReadLine(), out int row);
-
-                if(row >= 0 && row <= 2 && column >= 0 && column <= 2)
-                { 
-                    if (board[column, row].Equals(0))
-                    {
-                        board[column, row] = player;
-                        placementInProgress = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Spot taken, pick a different spot");
-                    }
-                }
                 else
                 {
-                    Console.WriteLine("Thats not a space on the board");
+                    Console.WriteLine("Please enter a number");
+
                 }
-                */
             }
+            
         }
 
         /// <summary>
@@ -98,7 +138,7 @@ namespace TicTacToe
         /// </summary>
         public static void ShowBoard()
         {
-            Console.WriteLine("++++++++++++++++++");
+            Console.WriteLine("+++++++++");
             for (int i = 0;  i < board.GetLength(0); i++)
             {
                 for (int j = 0; j < board.GetLength(1); j++)
@@ -115,7 +155,7 @@ namespace TicTacToe
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine("++++++++++++++++++");
+            Console.WriteLine("+++++++++");
         }
 
         /// <summary>
