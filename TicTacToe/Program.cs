@@ -105,13 +105,15 @@ namespace TicTacToe
         /// <param name="player"></param>
         public static void Placement(char player)
         {
+            // Run will the user is placing their tic
             bool placementInProgress = true;
             while (placementInProgress)
             {
-                char letterPlayer = Convert.ToChar(player);
-                Console.WriteLine($"{letterPlayer}, Pick a Spot thats Open: ");
+                // Telling the player to enter their input
+                Console.WriteLine($"{player}, Pick a Spot thats Open: ");
                 string userInput = Console.ReadLine();
 
+                // If the 
                 if (char.TryParse(userInput, out char position))
                 {
                     for (int i = 0; i < board.GetLength(0); i++)
