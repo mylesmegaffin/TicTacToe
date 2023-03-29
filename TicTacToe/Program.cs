@@ -24,6 +24,11 @@ namespace TicTacToe
             ShowBoard();
             Placement(player1Marker);
             winner = CheckWinner(player1Marker);
+            if (winner)
+            {
+                Console.WriteLine("Player 1 is the Winner!");
+            }
+
         }
         // Player 2 Method everything The Player would do during their turn
         public static void Player2()
@@ -31,6 +36,10 @@ namespace TicTacToe
             ShowBoard();
             Placement(player2Marker);
             winner = CheckWinner(player2Marker);
+            if (winner)
+            {
+                Console.WriteLine("Player 2 is the Winner!");
+            }
         }
 
         /// <summary>
@@ -98,52 +107,45 @@ namespace TicTacToe
         /// <returns></returns>
         public static bool CheckWinner(int player)
         {
+
             // Check Across the top
             if (board[0, 0].Equals(player) && board[0, 1].Equals(player) && board[0, 2].Equals(player))
             {
-                Console.WriteLine("Winner is player: " + board[0, 0]);
                 return true;
             }
             // Check Down the left side
             else if (board[0, 0].Equals(player) && board[1, 0].Equals(player) && board[2, 0].Equals(player))
             {
-                Console.WriteLine("Winner is player: " + board[0, 0]);
                 return true;
             }
             // Check Top left to Bottom Right
             else if (board[0, 0].Equals(player) && board[1, 1].Equals(player) && board[2, 2].Equals(player))
             {
-                Console.WriteLine("Winner is player: " + board[0, 0]);
                 return true;
             }
             // Check Bottom left to Top Right
             else if (board[2, 0].Equals(player) && board[1, 1].Equals(player) && board[0, 2].Equals(player))
             {
-                Console.WriteLine("Winner is player: " + board[2, 0]);
                 return true;
             }
             // Check Across the Bottom
             else if (board[2, 0].Equals(player) && board[2, 1].Equals(player) && board[2, 2].Equals(player))
             {
-                Console.WriteLine("Winner is player: " + board[2, 0]);
                 return true;
             }
             // Check Down the Right side
             else if (board[0, 2].Equals(player) && board[1, 2].Equals(player) && board[2, 2].Equals(player))
             {
-                Console.WriteLine("Winner is player: " + board[0, 2]);
                 return true;
             }
             // Check Across the Middle
             else if (board[1, 0].Equals(player) && board[1, 1].Equals(player) && board[1, 2].Equals(player))
             {
-                Console.WriteLine("Winner is player: " + board[1, 1]);
                 return true;
             }
             // Check down the Middle
             else if (board[0, 1].Equals(player) && board[1, 1].Equals(player) && board[2, 1].Equals(player))
             {
-                Console.WriteLine("Winner is player: " + board[1, 1]);
                 return true;
             }
             else
