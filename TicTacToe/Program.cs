@@ -4,15 +4,15 @@ namespace TicTacToe
 {
     internal class Program
     {
-        static int[,] board = new int[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+        static char[,] board = { { '1', '2', '3' }, { '4', '5', '6' }, { '7', '8', '9' } };
         static int tacPlaced = 0;
         static bool winner = false;
 
         // Ascii Number for X
-        static int player1Marker = 88;
+        static char player1Marker = 'X';
 
         // Ascii Number for O
-        static int player2Marker = 79;
+        static char player2Marker = 'O';
 
         static void Main(string[] args)
         {
@@ -41,7 +41,8 @@ namespace TicTacToe
                 for (int j = 0; j < board.GetLength(1); j++)
                 {
                     counter++;
-                    board[i,j] = counter;
+                    string sCounter = counter.ToString();
+                    board[i,j] = char.Parse(sCounter);
                 }
             }
 
@@ -51,6 +52,7 @@ namespace TicTacToe
 
         public static void Gameloop()
         {
+            initSetup();
             // Continue to play/run until a Player wins
             while (!winner)
             {
@@ -101,7 +103,7 @@ namespace TicTacToe
         /// Placing the players tic on the board. Putting the player given, into the array at the input given
         /// </summary>
         /// <param name="player"></param>
-        public static void Placement(int player)
+        public static void Placement(char player)
         {
             bool placementInProgress = true;
             while (placementInProgress)
@@ -109,26 +111,28 @@ namespace TicTacToe
                 char letterPlayer = Convert.ToChar(player);
                 Console.WriteLine($"{letterPlayer}, Pick a Spot thats Open: ");
                 string userInput = Console.ReadLine();
-                if (Int32.TryParse(userInput, out int position))
+
+                if (char.TryParse(userInput, out char position))
                 {
                     for (int i = 0; i < board.GetLength(0); i++)
                     {
                         for (int j = 0; j < board.GetLength(1); j++)
                         {
-                            if (board[i, j] == position && board[i, j] <= 9)
+                            if (board[i, j] == position)
                             {
                                 board[i, j] = player;
                                 placementInProgress = false;
                                 tacPlaced++;
                             }
+                            else
+                            {
+                                Console.WriteLine("Not a vaild input");
+                            }
                         }
                     }
-                }
-                else
-                {
-                    Console.WriteLine("Please enter a number");
 
                 }
+
             }
             
         }
@@ -138,24 +142,20 @@ namespace TicTacToe
         /// </summary>
         public static void ShowBoard()
         {
-            Console.WriteLine("+++++++++");
-            for (int i = 0;  i < board.GetLength(0); i++)
-            {
-                for (int j = 0; j < board.GetLength(1); j++)
-                {
-                    if (board[i,j] > 9)
-                    {
-                        char converted = Convert.ToChar(board[i, j]);
-                        Console.Write("|" + converted + "|");
-                    }
-                    else
-                    {
-                        Console.Write("|" + board[i, j] + "|");
-                    }
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine("+++++++++");
+
+            Console.WriteLine("       |       |      ");
+            Console.WriteLine("   {0}   |   {1}   |   {2}   ", Convert.ToChar(board[0, 0]), Convert.ToChar(board[0, 1]), Convert.ToChar(board[0, 2]));
+            Console.WriteLine("       |       |      ");
+            Console.WriteLine("----------------------");
+            Console.WriteLine("       |       |      ");
+            Console.WriteLine("   {0}   |   {1}   |   {2}   ", Convert.ToChar(board[1, 0]), Convert.ToChar(board[1, 1]), Convert.ToChar(board[1, 2]));
+            Console.WriteLine("       |       |      ");
+            Console.WriteLine("----------------------");
+            Console.WriteLine("       |       |      ");
+            Console.WriteLine("   {0}   |   {1}   |   {2}   ", Convert.ToChar(board[2, 0]), Convert.ToChar(board[2, 1]), Convert.ToChar(board[2, 2]));
+            Console.WriteLine("       |       |      ");
+
+
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace TicTacToe
         /// </summary>
         /// <param name="player"></param>
         /// <returns></returns>
-        public static bool CheckWinner(int player)
+        public static bool CheckWinner(char player)
         {
 
             // Check Across the top
@@ -211,6 +211,13 @@ namespace TicTacToe
                 return false;
             }
 
+        }
+
+        public static void initSetup()
+        {
+
+            Console.Title = "Tic Tac Toe: by Myles";
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
         }
          
     }
