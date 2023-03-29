@@ -4,7 +4,7 @@ namespace TicTacToe
 {
     internal class Program
     {
-        static int[,] board = new int[3, 3];
+        static int[,] board = new int[3, 3] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
         static bool winner = false;
         static int player1Marker = 88;
         static int player2Marker = 79;
@@ -51,6 +51,23 @@ namespace TicTacToe
             bool placementInProgress = true;
             while (placementInProgress)
             {
+                Console.WriteLine("Where do you want to go?: ");
+                string userInput = Console.ReadLine();
+                if(Int32.TryParse(userInput, out int position))
+                {
+                    for (int i = 0 ; i < board.GetLength(0); i++)
+                    {
+                        for(int j = 0 ; j < board.GetLength(1); j++)
+                        {
+                            if (board[i,j] == position && board[i,j] < 9)
+                            {
+                                board[i,j] = player;
+                                placementInProgress = false;
+                            }
+                        }
+                    }
+                }
+                /*
                 Console.WriteLine("What Column: ");
                 Int32.TryParse(Console.ReadLine(), out int column);
                 Console.WriteLine("What Row: ");
@@ -72,6 +89,7 @@ namespace TicTacToe
                 {
                     Console.WriteLine("Thats not a space on the board");
                 }
+                */
             }
         }
 
