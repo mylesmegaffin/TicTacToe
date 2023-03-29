@@ -6,6 +6,8 @@ namespace TicTacToe
     {
         static int[,] board = new int[3, 3];
         static bool winner = false;
+        static int player1Marker = 88;
+        static int player2Marker = 79;
         static void Main(string[] args)
         {
             // Continue to play/run until a Player wins
@@ -20,15 +22,15 @@ namespace TicTacToe
         public static void Player1()
         {
             ShowBoard();
-            Placement(1);
-            winner = CheckWinner(1);
+            Placement(player1Marker);
+            winner = CheckWinner(player1Marker);
         }
         // Player 2 Method everything The Player would do during their turn
         public static void Player2()
         {
             ShowBoard();
-            Placement(2);
-            winner = CheckWinner(2);
+            Placement(player2Marker);
+            winner = CheckWinner(player2Marker);
         }
 
         /// <summary>
@@ -54,7 +56,7 @@ namespace TicTacToe
                     }
                     else
                     {
-                        Console.WriteLine("Spot taken, pick a differnt spot");
+                        Console.WriteLine("Spot taken, pick a different spot");
                     }
                 }
                 else
@@ -74,13 +76,14 @@ namespace TicTacToe
             {
                 for (int j = 0; j < board.GetLength(1); j++)
                 {
-                    if (board[i,j] != 0)
+                    if (board[i,j] > 9)
                     {
-                        Console.Write("|" + board[i, j] + "|");
+                        char converted = Convert.ToChar(board[i, j]);
+                        Console.Write("|" + converted + "|");
                     }
                     else
                     {
-                        Console.Write("| |");
+                        Console.Write("|" + board[i, j] + "|");
                     }
                 }
                 Console.WriteLine();
