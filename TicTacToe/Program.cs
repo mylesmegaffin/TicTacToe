@@ -131,6 +131,18 @@ namespace TicTacToe
                 Console.WriteLine("Winner is player: " + board[0, 2]);
                 return true;
             }
+            // Check Across the Middle
+            else if (board[1, 0].Equals(player) && board[1, 1].Equals(player) && board[1, 2].Equals(player))
+            {
+                Console.WriteLine("Winner is player: " + board[1, 1]);
+                return true;
+            }
+            // Check down the Middle
+            else if (board[0, 1].Equals(player) && board[1, 1].Equals(player) && board[2, 1].Equals(player))
+            {
+                Console.WriteLine("Winner is player: " + board[1, 1]);
+                return true;
+            }
             else
             {
                 return false;
